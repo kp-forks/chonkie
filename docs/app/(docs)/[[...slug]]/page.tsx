@@ -9,20 +9,6 @@ import { redirect } from "next/navigation";
 import { getMDXComponents } from "@/components/mdx";
 import { CHONKIE_QUICK_START } from "@/lib/constants";
 
-function shouldRedirectToDefault(slug: string): boolean {
-  if (slug === "overview" || slug.startsWith("overview/")) return true;
-  if (slug.startsWith("chonkie/common")) return true;
-  return false;
-}
-
-function resolveLegacyChonkiePath(slug: string): string | null {
-  if (slug === "chonkie/oss") return CHONKIE_QUICK_START;
-  if (slug.startsWith("chonkie/oss/")) {
-    return `/chonkie/${slug.slice("chonkie/oss/".length)}`;
-  }
-  return null;
-}
-
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
 }) {
@@ -33,13 +19,6 @@ export default async function Page(props: {
   }
 
   const slug = params.slug.join("/");
-
-  if (shouldRedirectToDefault(slug)) {
-    redirect(CHONKIE_QUICK_START);
-  }
-
-  const legacyChonkie = resolveLegacyChonkiePath(slug);
-  if (legacyChonkie) redirect(legacyChonkie);
 
   if (slug === "python" || slug === "chonkie") redirect(CHONKIE_QUICK_START);
 
@@ -72,11 +51,6 @@ export async function generateMetadata(props: {
   const params = await props.params;
   if (!params.slug || params.slug.length === 0) {
     return { title: "Documentation", description: "Chonkie Documentation" };
-  }
-
-  const slug = params.slug.join("/");
-  if (shouldRedirectToDefault(slug)) {
-    redirect(CHONKIE_QUICK_START);
   }
 
   const page = source.getPage(params.slug);

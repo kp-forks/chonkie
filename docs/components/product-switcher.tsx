@@ -44,7 +44,7 @@ export function ProductSwitcher() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const current = getProductFromPath(pathname);
+  const current = getProductFromPath();
 
   useEffect(() => {
     function onClickOutside(e: MouseEvent) {

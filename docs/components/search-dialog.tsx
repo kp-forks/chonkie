@@ -16,7 +16,6 @@ import { useI18n } from "fumadocs-ui/contexts/i18n";
 import { useDocsSearch } from "fumadocs-core/search/client";
 import { fetchClient } from "fumadocs-core/search/client/fetch";
 import { use, useMemo } from "react";
-import { sortSearchResults } from "@/lib/sort-search-results";
 
 let staticImport:
   | Promise<typeof import("fumadocs-core/search/client/orama-static")>
@@ -53,8 +52,7 @@ export function ChonkieSearchDialog({
       }));
     }
 
-    if (!query.data) return query.data;
-    return sortSearchResults(query.data);
+    return query.data;
   }, [query.data, links]);
 
   return (
