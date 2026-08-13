@@ -330,6 +330,10 @@ def test_token_chunker_negative_overlap() -> None:
     """A negative chunk_overlap must be rejected instead of skipping tokens."""
     with pytest.raises(ValueError):
         TokenChunker(tokenizer="character", chunk_size=100, chunk_overlap=-0.5)
+    # A small negative fraction resolves to int() == 0, so it must be rejected
+    # on the input sign rather than the resolved token count.
+    with pytest.raises(ValueError):
+        TokenChunker(tokenizer="character", chunk_size=100, chunk_overlap=-0.001)
 
 
 def test_token_chunker_float_overlap_valid() -> None:
