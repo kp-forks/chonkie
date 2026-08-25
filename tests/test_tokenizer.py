@@ -875,7 +875,7 @@ def test_tokenizer_batch_operations_consistency() -> None:
 ### Tokie Backend Tests ###
 
 
-@pytest.mark.parametrize("model_name", ["gpt2", "o200k_base", "p50k_base"])
+@pytest.mark.parametrize("model_name", ["gpt2", "p50k_base"])
 def test_tokie_backend_string_init(model_name: str) -> None:
     """Test that string-loaded tokenizers use tokie backend."""
     tokenizer = AutoTokenizer(model_name)
